@@ -3,22 +3,19 @@ using System.Collections.Generic;
 using Unity.XR.CoreUtils;
 using UnityEngine.XR.Interaction.Toolkit.Interactables;
 using UnityEngine.XR.Interaction.Toolkit;
+using Unity.Collections;
 
 public class ObjectAttachment : MonoBehaviour
 {
     [SerializeField]
     GameObject m_Child = null;
+    [SerializeField]
+    string Tag = "Drill_Attachment";
 
-    public GameObject Bindings
-    {
-        get => m_Child;
-        set { m_Child = value; }
-    }
     private void OnTriggerEnter(Collider other)
     {
         if (other == null) return;
-        if (m_Child != null) return;
-        if (!other.gameObject.CompareTag("Flag")) // "Flag" - временная метка, нужно заменить
+        if (!other.gameObject.CompareTag(Tag)) // "Flag" - временная метка, нужно заменить
             return;
 
         var interact = other.gameObject.GetComponent<XRGrabInteractable>();
@@ -27,10 +24,9 @@ public class ObjectAttachment : MonoBehaviour
             if (interact.interactorsSelecting.Count != 0)
             {
                 XRInteractionManager manager = new();
-                manager.SelectExit(interact.interactorsSelecting[0], interact);
-                if (interact.interactorsSelecting.Count > 1)
+                foreach (var interaction in interact.interactorsSelecting)
                 {
-                    manager.SelectExit(interact.interactorsSelecting[1], interact);
+                    manager.SelectExit(interaction, interact);
                 }
             }
         }
@@ -41,7 +37,7 @@ public class ObjectAttachment : MonoBehaviour
 
     private void FixedUpdate()
     {
-        
+        // для закрепления.
     }
 
     private void OnTriggerExit(Collider other)
