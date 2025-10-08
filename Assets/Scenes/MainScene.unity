@@ -623,10 +623,6 @@ MonoBehaviour:
     StartEngine: {fileID: 692265564}
     StopEngine: {fileID: 1437580876}
     IdleEngine: {fileID: 1548272037}
-  Direction:
-    X: 0
-    Y: 1
-    Z: 0
 --- !u!1 &692265563
 GameObject:
   m_ObjectHideFlags: 0
@@ -977,7 +973,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 31321ba15b8f8eb4c954353edc038b1d, type: 2}
+  - {fileID: 2100000, guid: 830d28b607e09a2479e2005c2eb5c75e, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
