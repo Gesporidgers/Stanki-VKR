@@ -5,13 +5,7 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using UnityEngine;
 
-[Serializable]
-public class strDir
-{
-	public bool X;
-	public bool Y;
-	public bool Z;
-}
+
 [Serializable]
 public class EngineSound
 {
@@ -36,27 +30,14 @@ public class Stanok : MonoBehaviour
 	
 	[SerializeField]
 	EngineSound Sound;
-	[SerializeField]
-	public strDir Direction;
-	[SerializeField]
-	List<float> RotationSpeeds = new List<float>() { 10f };
 
-
-	private float CurrentSpeed;
-	private int CurrentSpeedId;
 	void Start()
 	{
-		CurrentSpeed = RotationSpeeds[0];
-		CurrentSpeedId = 0;
 
     }
 	private void FixedUpdate()
 	{
-		transform.Rotate(
-			Convert.ToInt32(Direction.X) * CurrentSpeed * work, 
-			Convert.ToInt32(Direction.Y) * CurrentSpeed * work, 
-			Convert.ToInt32(Direction.Z) * CurrentSpeed * work
-		);
+		
 	}
 	public void Switch()
 	{
@@ -70,17 +51,4 @@ public class Stanok : MonoBehaviour
 			Sound.Stop();
 		}
 	}
-
-	public void IncreaseRotationSpeed()
-	{
-		CurrentSpeedId++;
-		if(CurrentSpeedId >= RotationSpeeds.Count) CurrentSpeedId = RotationSpeeds.Count - 1;
-		CurrentSpeed = RotationSpeeds[CurrentSpeedId];
-    }
-    public void DecreaseRotationSpeed()
-	{
-        CurrentSpeedId--;
-        if (CurrentSpeedId < 0) CurrentSpeedId = 0;
-        CurrentSpeed = RotationSpeeds[CurrentSpeedId];
-    }
 }
