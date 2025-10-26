@@ -25,6 +25,7 @@ public class EngineSound
 
 public class Stanok : MonoBehaviour
 {
+	[HideInInspector]
 	public int work = 0;
 	delegate void IncreaseRotationSpeedDelegate();
 	

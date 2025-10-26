@@ -4,18 +4,19 @@ using Unity.XR.CoreUtils;
 using UnityEngine.XR.Interaction.Toolkit.Interactables;
 using UnityEngine.XR.Interaction.Toolkit;
 using Unity.Collections;
+using UnityEngine.XR.Interaction.Toolkit.Interactors;
 
 public class ObjectAttachment : MonoBehaviour
 {
-    [SerializeField]
-    GameObject m_Child = null;
+    //[SerializeField]
+    //GameObject m_Child = null;
     [SerializeField]
     string Tag = "Drill_Attachment";
 
     private void OnTriggerEnter(Collider other)
     {
         if (other == null) return;
-        if (!other.gameObject.CompareTag(Tag)) // "Flag" - временная метка, нужно заменить
+        if (!other.gameObject.CompareTag(Tag))
             return;
 
         var interact = other.gameObject.GetComponent<XRGrabInteractable>();
@@ -24,15 +25,21 @@ public class ObjectAttachment : MonoBehaviour
             if (interact.interactorsSelecting.Count != 0)
             {
                 XRInteractionManager manager = new();
-                foreach (var interaction in interact.interactorsSelecting)
+                IXRSelectInteractor[] interactions = new IXRSelectInteractor[interact.interactorsSelecting.Count];
+                interact.interactorsSelecting.CopyTo(interactions);
+                foreach (var interaction in interactions)
                 {
                     manager.SelectExit(interaction, interact);
                 }
             }
         }
-        other.gameObject.transform.rotation = new Quaternion(0, 0, 0, 1);
+        other.gameObject.transform.rotation = this.transform.rotation;
         other.gameObject.transform.position = this.transform.position;
-        m_Child = other.gameObject;
+        other.gameObject.transform.parent = this.gameObject.transform;
+
+        Debug.Log(this.gameObject.transform.childCount);
+
+        //m_Child = other.gameObject;
     }
 
     private void FixedUpdate()
@@ -42,8 +49,9 @@ public class ObjectAttachment : MonoBehaviour
 
     private void OnTriggerExit(Collider other)
     {
-        if (m_Child == null) return;
-        if (m_Child.transform.childCount > 0) return;
-        m_Child = null;
+        other.gameObject.transform.parent = null;
+        //if (m_Child == null) return;
+        //if (m_Child.transform.childCount > 0) return;
+        //m_Child = null;
     }
 }
