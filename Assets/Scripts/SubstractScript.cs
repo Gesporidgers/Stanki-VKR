@@ -1,5 +1,6 @@
 using UnityEngine;
 using Parabox.CSG;
+using Unity.VisualScripting;
 
 public class SubstractScript : MonoBehaviour
 {
@@ -8,11 +9,17 @@ public class SubstractScript : MonoBehaviour
 	{
 		var subtracted = other.gameObject;
 		var sourceComponent = gameObject;
-		var transf = sourceComponent.transform;
-		Model result = CSG.Subtract(sourceComponent, subtracted);
+		var transformLocalPos = sourceComponent.transform.localPosition;
+        var transformLocalRot = sourceComponent.transform.localRotation;
+        var transformLocalSc = sourceComponent.transform.localScale;
+
+        Model result = CSG.Subtract(sourceComponent, subtracted);
 		sourceComponent.transform.position = new Vector3(0, 0, 0);
 		sourceComponent.GetComponent<MeshFilter>().sharedMesh = result.mesh;
 		sourceComponent.GetComponent<MeshRenderer>().sharedMaterials = result.materials.ToArray();
-		sourceComponent.transform.position = transf.position;
-	}
+
+		sourceComponent.transform.localPosition = transformLocalPos;
+        sourceComponent.transform.localRotation = transformLocalRot;
+        sourceComponent.transform.localScale = transformLocalSc;
+    }
 }
