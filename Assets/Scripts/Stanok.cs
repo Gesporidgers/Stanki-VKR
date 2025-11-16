@@ -27,28 +27,27 @@ public class Stanok : MonoBehaviour
 {
 	[HideInInspector]
 	public int work = 0;
+	public int MotorForce;
 	delegate void IncreaseRotationSpeedDelegate();
 	
 	[SerializeField]
 	EngineSound Sound;
 
-	void Start()
-	{
-
-    }
-	private void FixedUpdate()
-	{
-		
-	}
 	public void Switch()
 	{
 		work = Convert.ToInt32(work == 0);
 		if (work == 1)
 		{
+			JointMotor m = gameObject.GetComponent<HingeJoint>().motor;
+			m.force = MotorForce;
+			gameObject.GetComponent<HingeJoint>().motor = m;
 			StartCoroutine(Sound.Start());
 		}
 		else
 		{
+			JointMotor m = gameObject.GetComponent<HingeJoint>().motor;
+			m.force = 0;
+			gameObject.GetComponent<HingeJoint>().motor = m;
 			Sound.Stop();
 		}
 	}
