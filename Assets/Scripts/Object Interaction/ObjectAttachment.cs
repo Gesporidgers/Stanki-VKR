@@ -37,10 +37,11 @@ public class ObjectAttachment : MonoBehaviour
         other.gameObject.transform.rotation = this.transform.rotation;
         other.gameObject.transform.position = this.transform.position;
         other.gameObject.transform.parent = this.gameObject.transform;
-        iHaveAttachment = true;
-        Debug.Log(this.gameObject.transform.childCount);
 
-        //m_Child = other.gameObject;
+        iHaveAttachment = true;
+        ParentColliderUpdate();
+
+        //Debug.Log(this.gameObject.transform.childCount);
     }
 
     private void FixedUpdate()
@@ -51,5 +52,28 @@ public class ObjectAttachment : MonoBehaviour
     private void OnTriggerExit(Collider other)
     {
         iHaveAttachment = false;
+        ParentColliderUpdate();
+    }
+
+    public void ParentColliderUpdate()
+    {
+        if (gameObject.GetComponentInParent<AttachableObject>() != null)
+        {
+            int n = gameObject.transform.parent.childCount;
+            int count = 0;
+            for (int i = 0; i < n; i++)
+            {
+                count += gameObject.transform.parent.GetChild(i).childCount;
+            }
+
+            if (count == 0)
+            {
+                gameObject.transform.parent.GetComponent<Collider>().enabled = true;
+            }
+            else
+            {
+                gameObject.transform.parent.GetComponent<Collider>().enabled = false;
+            }
+        }
     }
 }

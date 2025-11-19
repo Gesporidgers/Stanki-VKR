@@ -21,7 +21,6 @@ public class AttachableObject : MonoBehaviour
         if (isChildScale && this.transform.parent != null || !isChildScale && this.transform.parent == null)
         {
             this.transform.localScale = scale.localScale;
-            //gameObject.GetComponent<XRGrabInteractable>().retainTransformParent = true;
         }
     }
 }
