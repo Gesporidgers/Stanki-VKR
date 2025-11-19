@@ -8,13 +8,14 @@ using UnityEngine.XR.Interaction.Toolkit.Interactors;
 
 public class ObjectAttachment : MonoBehaviour
 {
-    //[SerializeField]
-    //GameObject m_Child = null;
+    private bool iHaveAttachment = false;
     [SerializeField]
     string Tag = "Drill_Attachment";
 
     private void OnTriggerEnter(Collider other)
     {
+        if (iHaveAttachment)
+            return;
         if (other == null) return;
         if (!other.gameObject.CompareTag(Tag))
             return;
@@ -37,9 +38,10 @@ public class ObjectAttachment : MonoBehaviour
         other.gameObject.transform.position = this.transform.position;
         other.gameObject.transform.parent = this.gameObject.transform;
 
-        Debug.Log(this.gameObject.transform.childCount);
+        iHaveAttachment = true;
+        ParentColliderUpdate();
 
-        //m_Child = other.gameObject;
+        //Debug.Log(this.gameObject.transform.childCount);
     }
 
     private void FixedUpdate()
@@ -49,9 +51,29 @@ public class ObjectAttachment : MonoBehaviour
 
     private void OnTriggerExit(Collider other)
     {
-        other.gameObject.transform.parent = null;
-        //if (m_Child == null) return;
-        //if (m_Child.transform.childCount > 0) return;
-        //m_Child = null;
+        iHaveAttachment = false;
+        ParentColliderUpdate();
+    }
+
+    public void ParentColliderUpdate()
+    {
+        if (gameObject.GetComponentInParent<AttachableObject>() != null)
+        {
+            int n = gameObject.transform.parent.childCount;
+            int count = 0;
+            for (int i = 0; i < n; i++)
+            {
+                count += gameObject.transform.parent.GetChild(i).childCount;
+            }
+
+            if (count == 0)
+            {
+                gameObject.transform.parent.GetComponent<Collider>().enabled = true;
+            }
+            else
+            {
+                gameObject.transform.parent.GetComponent<Collider>().enabled = false;
+            }
+        }
     }
 }
