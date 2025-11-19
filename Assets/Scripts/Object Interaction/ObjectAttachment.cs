@@ -8,13 +8,14 @@ using UnityEngine.XR.Interaction.Toolkit.Interactors;
 
 public class ObjectAttachment : MonoBehaviour
 {
-    //[SerializeField]
-    //GameObject m_Child = null;
+    private bool iHaveAttachment = false;
     [SerializeField]
     string Tag = "Drill_Attachment";
 
     private void OnTriggerEnter(Collider other)
     {
+        if (iHaveAttachment)
+            return;
         if (other == null) return;
         if (!other.gameObject.CompareTag(Tag))
             return;
@@ -36,7 +37,7 @@ public class ObjectAttachment : MonoBehaviour
         other.gameObject.transform.rotation = this.transform.rotation;
         other.gameObject.transform.position = this.transform.position;
         other.gameObject.transform.parent = this.gameObject.transform;
-
+        iHaveAttachment = true;
         Debug.Log(this.gameObject.transform.childCount);
 
         //m_Child = other.gameObject;
@@ -49,9 +50,6 @@ public class ObjectAttachment : MonoBehaviour
 
     private void OnTriggerExit(Collider other)
     {
-        other.gameObject.transform.parent = null;
-        //if (m_Child == null) return;
-        //if (m_Child.transform.childCount > 0) return;
-        //m_Child = null;
+        iHaveAttachment = false;
     }
 }
