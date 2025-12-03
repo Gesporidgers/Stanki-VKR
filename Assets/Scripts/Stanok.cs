@@ -28,12 +28,19 @@ public class Stanok : MonoBehaviour
 	[HideInInspector]
 	public int work = 0;
 	public int MotorForce;
-	delegate void IncreaseRotationSpeedDelegate();
 	
 	[SerializeField]
 	EngineSound Sound;
 
-	public void Switch()
+    private void Start()
+    {
+		for (int i = 0; i < transform.childCount; i++)
+		{
+			Debug.Log(transform.GetChild(i).gameObject.name);
+		}
+	}
+
+    public void Switch()
 	{
 		work = Convert.ToInt32(work == 0);
 		if (work == 1)
@@ -41,6 +48,7 @@ public class Stanok : MonoBehaviour
 			JointMotor m = gameObject.GetComponent<HingeJoint>().motor;
 			m.force = MotorForce;
 			gameObject.GetComponent<HingeJoint>().motor = m;
+			
 			StartCoroutine(Sound.Start());
 		}
 		else
