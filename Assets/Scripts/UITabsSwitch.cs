@@ -1,19 +1,23 @@
 using UnityEngine;
+using UnityEngine.UI;
+using System.Collections.Generic;
+using System.Collections;
+using UnityEngine.EventSystems;
 
-public class UITabsSwitch : MonoBehaviour
+public class UITabsSwitch : MonoBehaviour, IPointerClickHandler
 {
-    [SerializeField]
-    Canvas Current;
-    [SerializeField]
-    Canvas Next;
+    public UITabGroup tabGroup;
+
+    public Image image;
 
     private void Start()
     {
-        //Switch(); test
+        image = GetComponent<Image>();
+        tabGroup.addSwitch(this);
     }
-    public void Switch()
+
+    public void OnPointerClick(PointerEventData eventData)
     {
-        Current.gameObject.SetActive(false);
-        Next.gameObject.SetActive(true);
+        tabGroup.OnTabSelected(this);
     }
 }
