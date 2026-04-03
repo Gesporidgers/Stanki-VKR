@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.Collections;
 using UnityEngine.EventSystems;
 
-public class UITabsSwitch : MonoBehaviour, IPointerClickHandler
+public class UITabsSwitch : MonoBehaviour
 {
     public UITabGroup tabGroup;
 
@@ -16,7 +16,7 @@ public class UITabsSwitch : MonoBehaviour, IPointerClickHandler
         tabGroup.addSwitch(this);
     }
 
-    public void OnPointerClick(PointerEventData eventData)
+    public void OnClick()
     {
         tabGroup.OnTabSelected(this);
     }
