@@ -40,7 +40,7 @@ public class AngleRotation : MonoBehaviour
             Debug.Log(transform.rotation.z);
             float distance = maxDistanceValue * (angle / (maxAngleValue - minAngleValue));
             Debug.Log("delta: " + distance);
-            MovingObject.transform.position = new Vector3(MovingObject.transform.localPosition.x, minDistanceValue - distance, MovingObject.transform.localPosition.z);
+            MovingObject.transform.Translate(new Vector3(MovingObject.transform.localPosition.x, minDistanceValue - distance, MovingObject.transform.localPosition.z));
         }
         if (counter > 20) counter = 0;
     }
