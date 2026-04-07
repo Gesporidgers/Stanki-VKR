@@ -4,6 +4,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using UnityEngine;
+using UnityEngine.UI;
 
 
 [Serializable]
@@ -27,17 +28,24 @@ public class Stanok : MonoBehaviour
 {
 	[HideInInspector]
 	public int work = 0;
-	public int MotorForce;
+	public List<float> MotorForces;
+	private int forceIndex = 0;
 	
 	[SerializeField]
 	EngineSound Sound;
 
+	public Canvas StanokUI;
+	public List<Button> Buttons;
+	public TMPro.TMP_Text Text;
+
     private void Start()
     {
-		for (int i = 0; i < transform.childCount; i++)
+		/*for (int i = 0; i < transform.childCount; i++)
 		{
 			Debug.Log(transform.GetChild(i).gameObject.name);
-		}
+		}*/
+		
+		
 	}
 
     public void Switch()
@@ -46,17 +54,48 @@ public class Stanok : MonoBehaviour
 		if (work == 1)
 		{
 			JointMotor m = gameObject.GetComponent<HingeJoint>().motor;
-			m.force = MotorForce;
+			m.force = MotorForces[forceIndex];
+			StanokUI.gameObject.SetActive(true);
 			gameObject.GetComponent<HingeJoint>().motor = m;
 			
 			StartCoroutine(Sound.Start());
+            Buttons[1].interactable = forceIndex - 1 > 0;
+            Buttons[0].interactable = forceIndex + 2 < MotorForces.Count;
+			this.Text.text = (MotorForces[0] / 10).ToString();
 		}
 		else
 		{
+			StanokUI.gameObject.SetActive(false);
 			JointMotor m = gameObject.GetComponent<HingeJoint>().motor;
 			m.force = 0;
 			gameObject.GetComponent<HingeJoint>().motor = m;
+			StopAllCoroutines();
 			Sound.Stop();
+			
 		}
+	}
+
+	public void IncSpeed()
+    {
+		forceIndex++;
+		JointMotor m = gameObject.GetComponent<HingeJoint>().motor;
+		m.force = MotorForces[forceIndex];
+		gameObject.GetComponent<HingeJoint>().motor = m;
+		Buttons[1].interactable = forceIndex - 1 > 0;
+		Buttons[0].interactable = forceIndex + 2 < MotorForces.Count;
+		this.Text.text = (MotorForces[forceIndex] / 10).ToString();
+		//return forceIndex + 2 > MotorForces.Count;
+	}
+
+	public void DecSpeed()
+    {
+		forceIndex--;
+		JointMotor m = gameObject.GetComponent<HingeJoint>().motor;
+		m.force = MotorForces[forceIndex];
+		gameObject.GetComponent<HingeJoint>().motor = m;
+		Buttons[1].interactable = forceIndex - 1 > 0;
+		Buttons[0].interactable = forceIndex + 2 < MotorForces.Count;
+		this.Text.text = (MotorForces[forceIndex] / 10).ToString();
+		//return ;
 	}
 }
