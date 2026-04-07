@@ -1063,7 +1063,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -8992967168163691766, guid: 9d15af6a013f55e4dbaaa91388ae77ff, type: 3}
       propertyPath: m_Intensity
-      value: 10
+      value: 7.45
       objectReference: {fileID: 0}
     - target: {fileID: -8992967168163691766, guid: 9d15af6a013f55e4dbaaa91388ae77ff, type: 3}
       propertyPath: m_Lightmapping
@@ -1131,7 +1131,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -4450536759890801738, guid: 9d15af6a013f55e4dbaaa91388ae77ff, type: 3}
       propertyPath: m_Intensity
-      value: 10
+      value: 7.45
       objectReference: {fileID: 0}
     - target: {fileID: -4450536759890801738, guid: 9d15af6a013f55e4dbaaa91388ae77ff, type: 3}
       propertyPath: m_Lightmapping
@@ -1147,7 +1147,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -2701114346260339781, guid: 9d15af6a013f55e4dbaaa91388ae77ff, type: 3}
       propertyPath: m_Intensity
-      value: 10
+      value: 7.45
       objectReference: {fileID: 0}
     - target: {fileID: -2701114346260339781, guid: 9d15af6a013f55e4dbaaa91388ae77ff, type: 3}
       propertyPath: m_Lightmapping
@@ -1163,7 +1163,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -1071359958148435772, guid: 9d15af6a013f55e4dbaaa91388ae77ff, type: 3}
       propertyPath: m_Intensity
-      value: 10
+      value: 7.45
       objectReference: {fileID: 0}
     - target: {fileID: -1071359958148435772, guid: 9d15af6a013f55e4dbaaa91388ae77ff, type: 3}
       propertyPath: m_Lightmapping
@@ -1183,7 +1183,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 211810981009007446, guid: 9d15af6a013f55e4dbaaa91388ae77ff, type: 3}
       propertyPath: m_Intensity
-      value: 10
+      value: 7.45
       objectReference: {fileID: 0}
     - target: {fileID: 211810981009007446, guid: 9d15af6a013f55e4dbaaa91388ae77ff, type: 3}
       propertyPath: m_Lightmapping
@@ -1219,7 +1219,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5783882096753140000, guid: 9d15af6a013f55e4dbaaa91388ae77ff, type: 3}
       propertyPath: m_Intensity
-      value: 10
+      value: 7.45
       objectReference: {fileID: 0}
     - target: {fileID: 5783882096753140000, guid: 9d15af6a013f55e4dbaaa91388ae77ff, type: 3}
       propertyPath: m_Lightmapping
@@ -2321,8 +2321,8 @@ MonoBehaviour:
     m_Bits: 1
   m_VolumeTrigger: {fileID: 0}
   m_VolumeFrameworkUpdateModeOption: 2
-  m_RenderPostProcessing: 0
-  m_Antialiasing: 0
+  m_RenderPostProcessing: 1
+  m_Antialiasing: 3
   m_AntialiasingQuality: 2
   m_StopNaN: 0
   m_Dithering: 0
@@ -2336,7 +2336,7 @@ MonoBehaviour:
   m_RequiresColorTexture: 0
   m_Version: 2
   m_TaaSettings:
-    m_Quality: 3
+    m_Quality: 2
     m_FrameInfluence: 0.1
     m_JitterScale: 1
     m_MipBias: 0
