@@ -1,0 +1,50 @@
+@startuml
+class AngleRotation {
+    - rotationSourse : Transform
+    - rotationSourseStartRotationAngle : float
+    - rotationAxis : Axis
+    - movingObject : Transform
+    - movementAxis : Axis
+    - maxDistance : float
+    - rotationAngle : float
+    - totalRotations : float
+    - invertDirection : bool
+    - smoothness : float
+    - startPosition : Vector3
+    - currentVelocity : Vector3
+    - prevAngle : float
+    - totalRotationsDelta : float
+}
+class GotoSceneScript {
+    + TargetSceneName : string
+}
+class AttachableObject {
+    + StartSize : Transform
+    + isChildObjectAtStart : bool
+    - scale : Transform
+    - isChildScale : bool
+}
+class ObjectAttachment {
+    - iHaveAttachment : bool
+}
+class EngineSound {
+    + StartEngine : AudioSource
+}
+class Stanok {
+    + work : int
+    + MotorForces : List<float>
+    - forceIndex : int
+    + StanokUI : Canvas
+    + Buttons : List<Button>
+    + Text : TMPro.TMP_Text
+}
+class SubstractScript {
+    + target : GameObject
+}
+MonoBehaviour <|-- AngleRotation
+MonoBehaviour <|-- GotoSceneScript
+MonoBehaviour <|-- AttachableObject
+MonoBehaviour <|-- ObjectAttachment
+MonoBehaviour <|-- Stanok
+MonoBehaviour <|-- SubstractScript
+@enduml
