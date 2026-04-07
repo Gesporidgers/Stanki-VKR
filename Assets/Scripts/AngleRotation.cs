@@ -1,52 +1,117 @@
 using UnityEngine;
+using UnityEngine.Animations;
 
 public class AngleRotation : MonoBehaviour
 {
+    [SerializeField] 
+    private Transform rotationSourse;
+
     [SerializeField]
-    public GameObject MovingObject;
+    private float rotationSourseStartRotationAngle = 0f;
+
+    [SerializeField] 
+    private Axis rotationAxis = Axis.Y;
+
     [SerializeField]
-    public float minAngleValue;
+    private Transform movingObject;
+
     [SerializeField]
-    public float maxAngleValue;
-    
-    private float minDistanceValue;
+    private Axis movementAxis = Axis.Y;
+
     [SerializeField]
-    public float maxDistanceValue;
+    private float maxDistance = 0f;
 
-    private float dirivative;
+    [SerializeField]
+    private float rotationAngle = 360f;
 
-    int counter = 0;
+    [SerializeField]
+    private float totalRotations = 1f;
 
+    [SerializeField]
+    private bool invertDirection = false;
 
-    private bool IsActive = false;
+    [SerializeField]
+    private float smoothness = 0.1f;
 
-    public void StartAngleRecalculation()
+    private Vector3 startPosition;
+    private Vector3 currentVelocity;
+    private float prevAngle;
+    private float totalRotationsDelta;
+
+    private void Awake()
     {
-        IsActive = true;
-        minDistanceValue = MovingObject.transform.localPosition.y;
-    }
-
-    public void StopAngleRecalculation()
-    {
-        IsActive = false;
-    }
-
-    private void FixedUpdate()
-    {
-        counter++;
-        if (IsActive)
-        {
-            float angle = transform.rotation.z - minAngleValue;
-            Debug.Log(transform.rotation.z);
-            float distance = maxDistanceValue * (angle / (maxAngleValue - minAngleValue));
-            Debug.Log("delta: " + distance);
-            MovingObject.transform.Translate(new Vector3(MovingObject.transform.localPosition.x, minDistanceValue - distance, MovingObject.transform.localPosition.z));
-        }
-        if (counter > 20) counter = 0;
+        if (rotationSourse == null)
+            rotationSourse = transform;
+        if (movingObject == null)
+            movingObject = transform;
     }
 
     private void Start()
     {
-        dirivative = maxAngleValue - minAngleValue;
+        startPosition = movingObject.localPosition;
+        if (rotationAngle < 360f) totalRotations = 1f;
+        totalRotationsDelta = 0f;
+        prevAngle = getRawAngle();
+    }
+
+    private void FixedUpdate()
+    {
+        float currentAngle = getRawAngle();
+        float delta = Mathf.DeltaAngle(prevAngle, currentAngle);
+        if (delta <= 1e-7f) return;
+        prevAngle = currentAngle;
+
+        float newDelta = totalRotationsDelta + delta;
+
+        float fullRotationAngle = rotationAngle * totalRotations;
+
+        totalRotationsDelta = Mathf.Clamp(newDelta, 0f, fullRotationAngle);
+
+        float normalizedProgress = totalRotationsDelta / fullRotationAngle;
+
+        float targetOffset = normalizedProgress * maxDistance;
+
+        if (invertDirection)
+            targetOffset = maxDistance - targetOffset;
+
+        Vector3 targetPosition = startPosition + GetOffsetVector(targetOffset);
+
+        Vector3 newPosition;
+        if (smoothness > 0.01f)
+            newPosition = Vector3.SmoothDamp(movingObject.localPosition, targetPosition, ref currentVelocity, smoothness);
+        else
+            newPosition = targetPosition;
+
+        movingObject.localPosition = newPosition;
+    }
+    private float getRawAngle()
+    {
+        Vector3 euler = rotationSourse.localEulerAngles;
+        float rawAngle = GetAxisValue(euler, rotationAxis);
+
+        return rawAngle;
+    }
+
+    private float GetAxisValue(Vector3 vec, Axis axis)
+    {
+        return axis switch
+        {
+            Axis.X => vec.x,
+            Axis.Y => vec.y,
+            Axis.Z => vec.z,
+            Axis.None => 0f,
+            _ => 0f
+        };
+    }
+
+    private Vector3 GetOffsetVector(float offset)
+    {
+        return movementAxis switch
+        {
+            Axis.X => new Vector3(offset, 0, 0),
+            Axis.Y => new Vector3(0, offset, 0),
+            Axis.Z => new Vector3(0, 0, offset),
+            _ => Vector3.zero
+        };
     }
 }
