@@ -58,7 +58,7 @@ public class AngleRotation : MonoBehaviour
     {
         float currentAngle = getRawAngle();
         float delta = Mathf.DeltaAngle(prevAngle, currentAngle);
-        if (delta <= 1e-7f) return;
+        if (Mathf.Abs(delta) <= 1e-7f) return;
         prevAngle = currentAngle;
 
         float newDelta = totalRotationsDelta + delta;
