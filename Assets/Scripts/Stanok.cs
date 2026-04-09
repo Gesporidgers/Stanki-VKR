@@ -10,7 +10,9 @@ using UnityEngine.UI;
 [Serializable]
 public class EngineSound
 {
-	public AudioSource StartEngine; public AudioSource StopEngine; public AudioSource IdleEngine;
+	public AudioSource StartEngine; 
+	public AudioSource StopEngine; 
+	public AudioSource IdleEngine;
 	public IEnumerator Start()
 	{
 		StartEngine.Play();
