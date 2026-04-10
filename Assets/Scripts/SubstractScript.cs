@@ -9,18 +9,23 @@ public class SubstractScript : MonoBehaviour
 	// Start is called once before the first execution of Update after the MonoBehaviour is created
 	
 	public GameObject target;
-	
-    /*private IEnumerator Cooldown()
-    {
+	public ParticleSystem particles;
 
-    }*/
-    public void Substract()
+
+	private void OnTriggerEnter(Collider other)
+	{
+		particles.Play();
+		gameObject.GetComponent<Timer>().duration = 1f;
+		gameObject.GetComponent<Timer>().doAfter = Substract;
+		gameObject.GetComponent<Timer>().StartTimer();
+	}
+	public void Substract()
     {
 		var sourceComponent = gameObject;
 		var offset = sourceComponent.transform.localPosition;
 		var scaleOffset = sourceComponent.transform.localScale;
 		var substracted = target;
-		Model result = CSG.Subtract(sourceComponent, substracted);
+		Model result = CSG.Subtract(substracted, sourceComponent);
 		Mesh mesh = result.mesh;
 		Vector3[] verts = mesh.vertices;
 		for (int i = 0; i < verts.Length; i++)
@@ -34,6 +39,15 @@ public class SubstractScript : MonoBehaviour
 		mesh.RecalculateBounds();
 		sourceComponent.GetComponent<MeshFilter>().sharedMesh = mesh;
 		sourceComponent.GetComponent<MeshRenderer>().sharedMaterials = result.materials.ToArray();
-		
+
+		gameObject.GetComponent<Collider>().isTrigger = false;
+		gameObject.GetComponent<Timer>().duration = 5f;
+		gameObject.GetComponent<Timer>().doAfter = () => { gameObject.GetComponent<Collider>().isTrigger = true; };
+		gameObject.GetComponent<Timer>().StartTimer();
+	}
+
+	public void OnTriggerExit(Collider other)
+	{
+		gameObject.GetComponent<Timer>().StopTimer();
 	}
 }
