@@ -17,9 +17,9 @@ public class MovingGrabPoint : XRBaseGrabTransformer
     public void Awake()
     {
         if (grabPoint == null) grabPoint = transform;
-        if (hingeJoint == null) hingeJoint = GetComponentInParent<HingeJoint>();
+        if (hingeJoint == null) hingeJoint = GetComponent<HingeJoint>();
 
-        var grabInteractable = GetComponentInParent<XRGrabInteractable>();
+        var grabInteractable = GetComponent<XRGrabInteractable>();
         if (grabInteractable != null)
         {
             rb = grabInteractable.GetComponent<Rigidbody>();
@@ -27,8 +27,17 @@ public class MovingGrabPoint : XRBaseGrabTransformer
             grabInteractable.trackPosition = false;
             grabInteractable.trackRotation = false;
             grabInteractable.movementType = XRBaseInteractable.MovementType.VelocityTracking;
-            if (grabInteractable.startingSingleGrabTransformers.Count == 0)
+            if (GetComponent<XRSingleGrabFreeTransformer>() == null)
+            {
+                this.AddComponent<XRSingleGrabFreeTransformer>();
                 grabInteractable.startingSingleGrabTransformers.Add(GetComponent<XRSingleGrabFreeTransformer>());
+                grabInteractable.startingSingleGrabTransformers.Add(GetComponent<MovingGrabPoint>());
+            }
+            else if (grabInteractable.startingSingleGrabTransformers.Count == 0)
+            {
+                grabInteractable.startingSingleGrabTransformers.Add(GetComponent<XRSingleGrabFreeTransformer>());
+                grabInteractable.startingSingleGrabTransformers.Add(GetComponent<MovingGrabPoint>());
+            }
             Debug.Log("Start up successful");
         }
         else Debug.Log("Ошибка, ненайден скрипт XRGrabInteractable");

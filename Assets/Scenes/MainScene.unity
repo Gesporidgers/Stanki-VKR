@@ -2044,7 +2044,6 @@ GameObject:
   - component: {fileID: 647356203}
   - component: {fileID: 647356202}
   - component: {fileID: 647356201}
-  - component: {fileID: 647356205}
   m_Layer: 0
   m_Name: Handle
   m_TagString: Untagged
@@ -2168,21 +2167,6 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 647356199}
   m_Mesh: {fileID: 10207, guid: 0000000000000000e000000000000000, type: 0}
---- !u!114 &647356205
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 647356199}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3c2bc8f1803f8b942bc1f2ddfca1bb5b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  grabInteractable: {fileID: 0}
-  hingeJoint: {fileID: 0}
-  grabPoint: {fileID: 0}
 --- !u!1 &688825692
 GameObject:
   m_ObjectHideFlags: 0
@@ -10536,6 +10520,8 @@ GameObject:
   - component: {fileID: 1851784224}
   - component: {fileID: 1851784229}
   - component: {fileID: 1851784223}
+  - component: {fileID: 1851784231}
+  - component: {fileID: 1851784230}
   m_Layer: 0
   m_Name: Cube
   m_TagString: Untagged
@@ -10686,7 +10672,9 @@ MonoBehaviour:
   m_ThrowAngularVelocityScale: 1
   m_ForceGravityOnDetach: 0
   m_RetainTransformParent: 1
-  m_StartingSingleGrabTransformers: []
+  m_StartingSingleGrabTransformers:
+  - {fileID: 1851784231}
+  - {fileID: 1851784230}
   m_StartingMultipleGrabTransformers: []
   m_AddDefaultGrabTransformers: 1
   m_FarAttachMode: 0
@@ -10799,14 +10787,14 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1851784222}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 1, z: 0}
+  m_LocalRotation: {x: 0, y: 1, z: 0, w: 0}
+  m_LocalPosition: {x: -2.35, y: 1, z: 0.59}
   m_LocalScale: {x: 0.05, y: 0.05, z: 0.05}
   m_ConstrainProportionsScale: 1
   m_Children:
   - {fileID: 329271820}
   m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 180, z: 0}
 --- !u!59 &1851784229
 HingeJoint:
   m_ObjectHideFlags: 0
@@ -10846,6 +10834,32 @@ HingeJoint:
   m_EnablePreprocessing: 1
   m_MassScale: 1
   m_ConnectedMassScale: 1
+--- !u!114 &1851784230
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1851784222}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3c2bc8f1803f8b942bc1f2ddfca1bb5b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  hingeJoint: {fileID: 0}
+  grabPoint: {fileID: 647356200}
+--- !u!114 &1851784231
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1851784222}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3d1e14ba0263b9841a819caa2b6caafa, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &1906014131 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 2043066480405472099, guid: 76f3439a0ae796e4b81bee3f91f888ee, type: 3}
