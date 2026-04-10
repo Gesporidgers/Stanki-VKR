@@ -34,7 +34,7 @@ public class Stanok : MonoBehaviour
 	private int forceIndex = 0;
 	
 	[SerializeField]
-	EngineSound Sound;
+	public EngineSound Sound;
 
 	public Canvas StanokUI;
 	public List<Button> Buttons;

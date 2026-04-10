@@ -27,24 +27,49 @@ class AttachableObject {
 class ObjectAttachment {
     - iHaveAttachment : bool
 }
+class strDir {
+    + X : bool
+    + Y : bool
+    + Z : bool
+}
+class ObjectRotation {
+    - CurrentSpeed : float
+    - CurrentSpeedId : int
+    + Direction : strDir
+    + StanokHolder : GameObject
+}
 class EngineSound {
     + StartEngine : AudioSource
+    + StopEngine : AudioSource
+    + IdleEngine : AudioSource
 }
 class Stanok {
     + work : int
     + MotorForces : List<float>
     - forceIndex : int
+    + Sound : EngineSound
     + StanokUI : Canvas
     + Buttons : List<Button>
     + Text : TMPro.TMP_Text
 }
 class SubstractScript {
     + target : GameObject
+    + particles : ParticleSystem
+}
+class Timer {
+    - time : float
+    - isRunning : bool
+    + duration : float
+    + doAfter : Action
 }
 MonoBehaviour <|-- AngleRotation
 MonoBehaviour <|-- GotoSceneScript
 MonoBehaviour <|-- AttachableObject
 MonoBehaviour <|-- ObjectAttachment
+MonoBehaviour <|-- ObjectRotation
 MonoBehaviour <|-- Stanok
 MonoBehaviour <|-- SubstractScript
+MonoBehaviour <|-- Timer
+ObjectRotation --> strDir : field
+Stanok --> EngineSound : field
 @enduml
