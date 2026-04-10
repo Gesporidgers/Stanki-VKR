@@ -10,17 +10,14 @@ public class Timer : MonoBehaviour
     public float duration = 0f;
     [HideInInspector]
     public Action doAfter;
-	void Start()
-    {
-        
-    }
 
     // Update is called once per frame
     void FixedUpdate()
     {
         if (isRunning)
         {
-            if (Time.deltaTime - time >= duration)
+            time += Time.deltaTime;
+			if (time >= duration)
             {
                 isRunning = false;
                 doAfter.Invoke();

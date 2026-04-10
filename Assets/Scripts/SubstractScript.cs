@@ -25,7 +25,7 @@ public class SubstractScript : MonoBehaviour
 		var offset = sourceComponent.transform.localPosition;
 		var scaleOffset = sourceComponent.transform.localScale;
 		var substracted = target;
-		Model result = CSG.Subtract(substracted, sourceComponent);
+		Model result = CSG.Subtract(sourceComponent, substracted);
 		Mesh mesh = result.mesh;
 		Vector3[] verts = mesh.vertices;
 		for (int i = 0; i < verts.Length; i++)
@@ -42,12 +42,14 @@ public class SubstractScript : MonoBehaviour
 
 		gameObject.GetComponent<Collider>().isTrigger = false;
 		gameObject.GetComponent<Timer>().duration = 5f;
-		gameObject.GetComponent<Timer>().doAfter = () => { gameObject.GetComponent<Collider>().isTrigger = true; };
+		gameObject.GetComponent<Timer>().doAfter = () => { sourceComponent.GetComponent<Collider>().isTrigger = true; Debug.Log("Invoked"); };
 		gameObject.GetComponent<Timer>().StartTimer();
+		particles.Stop();
 	}
 
 	public void OnTriggerExit(Collider other)
 	{
-		gameObject.GetComponent<Timer>().StopTimer();
+		if (gameObject.GetComponent<Timer>().duration != 5f)
+			gameObject.GetComponent<Timer>().StopTimer();
 	}
 }
