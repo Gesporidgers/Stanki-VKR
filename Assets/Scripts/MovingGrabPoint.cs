@@ -3,46 +3,82 @@ using UnityEngine;
 using UnityEngine.XR.Interaction.Toolkit;
 using UnityEngine.XR.Interaction.Toolkit.Interactables;
 using UnityEngine.XR.Interaction.Toolkit.Interactors;
+using UnityEngine.XR.Interaction.Toolkit.Transformers;
 
-public class MovingGrabPoint : MonoBehaviour
+public class MovingGrabPoint : XRBaseGrabTransformer
 {
     [Header("Компоненты")]
-    [SerializeField] private XRGrabInteractable grabInteractable;
     [SerializeField] private HingeJoint hingeJoint;
     [SerializeField] private Transform grabPoint;
 
+    private XRBaseInteractor interactor;
+    private Rigidbody rb;
+
     public void Awake()
     {
-        if (grabInteractable == null) grabInteractable = GetComponentInParent<XRGrabInteractable>();
         if (grabPoint == null) grabPoint = transform;
         if (hingeJoint == null) hingeJoint = GetComponentInParent<HingeJoint>();
-    }
 
-    private void OnEnable()
-    {
-        grabInteractable.selectEntered.AddListener(OnGrab);
-    }
-
-    private void OnDisable()
-    {
-        grabInteractable.selectEntered.RemoveListener(OnGrab);
-    }
-
-    private void OnGrab(SelectEnterEventArgs args)
-    {
-        Vector3 localOffset = grabInteractable.transform.InverseTransformPoint(grabPoint.position);
-
-        grabInteractable.attachTransform = grabPoint;
-
-        Rigidbody rb = grabInteractable.GetComponent<Rigidbody>();
-        if(rb != null)
+        var grabInteractable = GetComponentInParent<XRGrabInteractable>();
+        if (grabInteractable != null)
         {
-            XRBaseInteractor interactor = args.interactorObject as XRBaseInteractor;
-            if(interactor != null)
-            {
-                Vector3 targetVel = (-interactor.transform.position + grabPoint.position) / Time.fixedDeltaTime;
-                rb.linearVelocity = Vector3.ClampMagnitude(targetVel, 5f);
-            }
+            rb = grabInteractable.GetComponent<Rigidbody>();
+
+            grabInteractable.trackPosition = false;
+            grabInteractable.trackRotation = false;
+            grabInteractable.movementType = XRBaseInteractable.MovementType.VelocityTracking;
+            if (grabInteractable.startingSingleGrabTransformers.Count == 0)
+                grabInteractable.startingSingleGrabTransformers.Add(GetComponent<XRSingleGrabFreeTransformer>());
+            Debug.Log("Start up successful");
         }
+        else Debug.Log("Ошибка, ненайден скрипт XRGrabInteractable");
+    }
+
+    public override void OnLink(XRGrabInteractable grabInteractable)
+    {
+        Debug.Log("Link function call");
+        //base.OnLink(grabInteractable);
+        
+    }
+
+    public override bool canProcess => true;
+
+    protected override RegistrationMode registrationMode => RegistrationMode.SingleAndMultiple;
+
+    public override void Process(XRGrabInteractable grabInteractable, XRInteractionUpdateOrder.UpdatePhase updatePhase, ref Pose targetPose, ref Vector3 localScale)
+    {
+        Debug.Log("Programm working");
+        if (updatePhase != XRInteractionUpdateOrder.UpdatePhase.Fixed) return;
+
+        if (grabInteractable.interactorsSelecting.Count == 0) return;
+        interactor = grabInteractable.interactorsSelecting[0] as XRBaseInteractor;
+
+        Vector3 handPosition = interactor.GetAttachTransform(grabInteractable).position;
+
+        Vector3 worldPosition = grabPoint.position;
+
+        Vector3 hingePosition = hingeJoint.transform.TransformPoint(hingeJoint.anchor);
+
+        Vector3 direction = handPosition - worldPosition;
+
+        Vector3 lever = worldPosition - hingePosition;
+
+        Vector3 axis = hingeJoint.transform.TransformDirection(hingeJoint.axis).normalized;
+
+        float force = Vector3.Dot(direction, Vector3.Cross(axis, lever).normalized);
+
+        Vector3 torque = axis * force * 10f;
+
+        rb.AddTorque(torque, ForceMode.Force);
+
+        rb.angularVelocity = Vector3.ClampMagnitude(rb.angularVelocity, 3f);
+
+        Debug.Log($"angularVel: {rb.angularVelocity}");
+    }
+
+    public override void OnGrab(XRGrabInteractable grabInteractable)
+    {
+        Debug.Log("Есть касание");
+        base.OnGrab(grabInteractable);
     }
 }
