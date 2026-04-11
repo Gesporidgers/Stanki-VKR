@@ -84,7 +84,7 @@ public class Stanok : MonoBehaviour
 		m.force = MotorForces[forceIndex];
 		gameObject.GetComponent<HingeJoint>().motor = m;
 		Buttons[1].interactable = forceIndex - 1 > 0;
-		Buttons[0].interactable = forceIndex + 2 < MotorForces.Count;
+		Buttons[0].interactable = forceIndex + 1 < MotorForces.Count;
 		this.Text.text = (MotorForces[forceIndex] / 10).ToString();
 		//return forceIndex + 2 > MotorForces.Count;
 	}

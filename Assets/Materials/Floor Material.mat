@@ -3,7 +3,7 @@
 --- !u!21 &2100000
 Material:
   serializedVersion: 8
-  m_ObjectHideFlags: 0
+  m_ObjectHideFlags: 32
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
@@ -77,7 +77,7 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _ParallaxMapping_6bec6a1e581341eb8f2a70c8aab3fb36_Heightmap_1_Texture2D:
-        m_Texture: {fileID: 2800000, guid: a368560240914f64cb280ec17fde8a31, type: 3}
+        m_Texture: {fileID: 2800000, guid: 1e17e338a3ecf5f468b53a2675bee452, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _SampleTexture2D_1936b43be7ad447db31c0746b1e10d63_Texture_1_Texture2D:
@@ -85,15 +85,15 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _SampleTexture2D_2a4d0dd053954f34a35064f431cde33f_Texture_1_Texture2D:
-        m_Texture: {fileID: 2800000, guid: 0ce6b2a246fa3544b82ca15e52ff9c00, type: 3}
+        m_Texture: {fileID: 2800000, guid: 332b61d5379ac5440925d03862701725, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _SampleTexture2D_5155ab176a1a4bf89c8f7c7637e09813_Texture_1_Texture2D:
-        m_Texture: {fileID: 2800000, guid: 8c51ec7f5d734424fa18e5f261486085, type: 3}
+        m_Texture: {fileID: 2800000, guid: 6621e5130161f2744b213265baa5c28f, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _SampleTexture2D_9a2448bb3aec4f65b1e25c980df52f93_Texture_1_Texture2D:
-        m_Texture: {fileID: 2800000, guid: 157016c0f6129f74c9512b28738bbba7, type: 3}
+        m_Texture: {fileID: 2800000, guid: f574930acee86e84c87cec8b183860d1, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _SpecGlossMap:
