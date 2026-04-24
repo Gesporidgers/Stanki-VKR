@@ -12,6 +12,8 @@ public class ObjectAttachment : MonoBehaviour
     [SerializeField]
     string Tag = "Drill_Attachment";
 
+    public bool isAttached() => HaveAttachment;
+
     private void OnTriggerEnter(Collider other)
     {
         Debug.Log("Collision");
@@ -38,7 +40,7 @@ public class ObjectAttachment : MonoBehaviour
         other.gameObject.transform.rotation = this.transform.rotation;
         other.gameObject.transform.position = this.transform.position;
         
-        FixedJoint fj = gameObject.GetComponent<FixedJoint>();
+        FixedJoint fj = other.gameObject.GetComponent<FixedJoint>();
         if(fj != null)
             fj.connectedBody = other.gameObject.GetComponent<Rigidbody>();
 
@@ -55,7 +57,7 @@ public class ObjectAttachment : MonoBehaviour
 
     private void OnTriggerExit(Collider other)
     {
-        FixedJoint fj = gameObject.GetComponent<FixedJoint>();
+        FixedJoint fj = other.gameObject.GetComponent<FixedJoint>();
         if (fj != null)
             fj.connectedBody = null;
         HaveAttachment = false;

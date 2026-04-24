@@ -7,20 +7,23 @@ using System.Collections;
 public class SubstractScript : MonoBehaviour
 {
 	// Start is called once before the first execution of Update after the MonoBehaviour is created
-	
+
 	public GameObject target;
 	public ParticleSystem particles;
 
 
 	private void OnTriggerEnter(Collider other)
 	{
-		particles.Play();
-		gameObject.GetComponent<Timer>().duration = 1f;
-		gameObject.GetComponent<Timer>().doAfter = Substract;
-		gameObject.GetComponent<Timer>().StartTimer();
+		if (other != null && other.gameObject.GetComponentInParent<ObjectAttachment>().isAttached() && gameObject.GetComponentInParent<ObjectAttachment>().isAttached())
+		{
+			particles.Play();
+			gameObject.GetComponent<Timer>().duration = 1f;
+			gameObject.GetComponent<Timer>().doAfter = Substract;
+			gameObject.GetComponent<Timer>().StartTimer();
+		}
 	}
 	public void Substract()
-    {
+	{
 		var sourceComponent = gameObject;
 		var offset = sourceComponent.transform.localPosition;
 		var scaleOffset = sourceComponent.transform.localScale;

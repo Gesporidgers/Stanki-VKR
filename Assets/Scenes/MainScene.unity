@@ -257,6 +257,7 @@ GameObject:
   - component: {fileID: 82304271}
   - component: {fileID: 82304273}
   - component: {fileID: 82304272}
+  - component: {fileID: 82304275}
   m_Layer: 0
   m_Name: Placeholder
   m_TagString: Untagged
@@ -313,6 +314,33 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 0.00033, y: 0.001, z: 0.0003}
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!54 &82304275
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 82304270}
+  serializedVersion: 4
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_CenterOfMass: {x: 0, y: 0, z: 0}
+  m_InertiaTensor: {x: 1, y: 1, z: 1}
+  m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ImplicitCom: 1
+  m_ImplicitTensor: 1
+  m_UseGravity: 0
+  m_IsKinematic: 1
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 0
 --- !u!1 &109583963
 GameObject:
   m_ObjectHideFlags: 0
@@ -15081,7 +15109,7 @@ Transform:
   m_GameObject: {fileID: 1524007731}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 1.051, y: 1.2442, z: 0.75}
+  m_LocalPosition: {x: -1.9822, y: 1.2442, z: 0.75}
   m_LocalScale: {x: 0.15, y: 0.15, z: 0.15}
   m_ConstrainProportionsScale: 1
   m_Children: []
@@ -15466,7 +15494,7 @@ Transform:
   m_GameObject: {fileID: 1587641124}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0, y: 0.9964, z: 0.2473}
+  m_LocalPosition: {x: 0, y: 0.9761, z: 0.2131}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -15504,7 +15532,7 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 0.15, y: 0.15, z: 0.15}
+  m_Size: {x: 0.12, y: 0.12, z: 0.15}
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &1755881093
 GameObject:
@@ -17331,7 +17359,7 @@ Transform:
   m_GameObject: {fileID: 1982068321123229023}
   serializedVersion: 2
   m_LocalRotation: {x: -0.000000026692543, y: 0.7071068, z: 0.000000026692543, w: 0.7071068}
-  m_LocalPosition: {x: 1.0374, y: 1.3231, z: 0.5176}
+  m_LocalPosition: {x: -2.686, y: 1.323, z: 0.6487}
   m_LocalScale: {x: 103.29904, y: 103.299, z: 103.29904}
   m_ConstrainProportionsScale: 1
   m_Children:
@@ -17366,6 +17394,7 @@ GameObject:
   - component: {fileID: 5083580291793691595}
   - component: {fileID: 5083580291793691596}
   - component: {fileID: 5083580291793691597}
+  - component: {fileID: 5083580291793691598}
   m_Layer: 0
   m_Name: Sverlo
   m_TagString: Drill_Attachment
@@ -17749,6 +17778,22 @@ MonoBehaviour:
   m_StartingMultipleGrabTransformers: []
   m_AddDefaultGrabTransformers: 1
   m_FarAttachMode: 1
+--- !u!138 &5083580291793691598
+FixedJoint:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1982068321123229023}
+  serializedVersion: 1
+  m_ConnectedBody: {fileID: 0}
+  m_ConnectedArticulationBody: {fileID: 0}
+  m_BreakForce: Infinity
+  m_BreakTorque: Infinity
+  m_EnableCollision: 0
+  m_EnablePreprocessing: 1
+  m_MassScale: 1
+  m_ConnectedMassScale: 1
 --- !u!1 &5131637388828369111
 GameObject:
   m_ObjectHideFlags: 0
