@@ -8,13 +8,14 @@ using UnityEngine.XR.Interaction.Toolkit.Interactors;
 
 public class ObjectAttachment : MonoBehaviour
 {
-    private bool iHaveAttachment = false;
+    private bool HaveAttachment = false;
     [SerializeField]
     string Tag = "Drill_Attachment";
 
     private void OnTriggerEnter(Collider other)
     {
-        if (iHaveAttachment)
+        Debug.Log("Collision");
+        if (HaveAttachment)
             return;
         if (other == null) return;
         if (!other.gameObject.CompareTag(Tag))
@@ -36,10 +37,13 @@ public class ObjectAttachment : MonoBehaviour
         }
         other.gameObject.transform.rotation = this.transform.rotation;
         other.gameObject.transform.position = this.transform.position;
-        other.gameObject.transform.parent = this.gameObject.transform;
+        
+        FixedJoint fj = gameObject.GetComponent<FixedJoint>();
+        if(fj != null)
+            fj.connectedBody = other.gameObject.GetComponent<Rigidbody>();
 
-        iHaveAttachment = true;
-        ParentColliderUpdate();
+        HaveAttachment = true;
+        //ParentColliderUpdate();
 
         //Debug.Log(this.gameObject.transform.childCount);
     }
@@ -51,8 +55,11 @@ public class ObjectAttachment : MonoBehaviour
 
     private void OnTriggerExit(Collider other)
     {
-        iHaveAttachment = false;
-        ParentColliderUpdate();
+        FixedJoint fj = gameObject.GetComponent<FixedJoint>();
+        if (fj != null)
+            fj.connectedBody = null;
+        HaveAttachment = false;
+        //ParentColliderUpdate();
     }
 
     public void ParentColliderUpdate()
