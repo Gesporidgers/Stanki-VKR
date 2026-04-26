@@ -16,9 +16,9 @@ public class ObjectAttachment : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        Debug.Log("Collision");
         if (HaveAttachment)
             return;
+        Debug.Log("Collision");
         if (other == null) return;
         if (!other.gameObject.CompareTag(Tag))
             return;
@@ -37,12 +37,16 @@ public class ObjectAttachment : MonoBehaviour
                 }
             }
         }
+
+        other.gameObject.GetComponent<Rigidbody>().isKinematic = false;
+
         other.gameObject.transform.rotation = this.transform.rotation;
         other.gameObject.transform.position = this.transform.position;
-        
+
+
         FixedJoint fj = other.gameObject.GetComponent<FixedJoint>();
         if(fj != null)
-            fj.connectedBody = other.gameObject.GetComponent<Rigidbody>();
+            fj.connectedBody = gameObject.GetComponent<Rigidbody>();
 
         HaveAttachment = true;
         //ParentColliderUpdate();
@@ -57,10 +61,15 @@ public class ObjectAttachment : MonoBehaviour
 
     private void OnTriggerExit(Collider other)
     {
+        if(!HaveAttachment) return;
+        Debug.Log("Exit");
         FixedJoint fj = other.gameObject.GetComponent<FixedJoint>();
         if (fj != null)
             fj.connectedBody = null;
+
         HaveAttachment = false;
+
+        other.gameObject.GetComponent<Rigidbody>().isKinematic = true;
         //ParentColliderUpdate();
     }
 
