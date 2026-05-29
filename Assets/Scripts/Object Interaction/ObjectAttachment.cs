@@ -9,6 +9,7 @@ using UnityEngine.XR.Interaction.Toolkit.Interactors;
 public class ObjectAttachment : MonoBehaviour
 {
     private bool HaveAttachment = false;
+    private GameObject m_attachedObject;
     [SerializeField]
     string Tag = "Drill_Attachment";
 
@@ -28,7 +29,7 @@ public class ObjectAttachment : MonoBehaviour
         {
             if (interact.interactorsSelecting.Count != 0)
             {
-                XRInteractionManager manager = new();
+                var manager = interact.interactionManager;
                 IXRSelectInteractor[] interactions = new IXRSelectInteractor[interact.interactorsSelecting.Count];
                 interact.interactorsSelecting.CopyTo(interactions);
                 foreach (var interaction in interactions)
@@ -38,10 +39,10 @@ public class ObjectAttachment : MonoBehaviour
             }
         }
 
-        other.gameObject.GetComponent<Rigidbody>().isKinematic = false;
+        var rb = other.gameObject.GetComponent<Rigidbody>();
 
-        other.gameObject.transform.rotation = this.transform.rotation;
-        other.gameObject.transform.position = this.transform.position;
+        rb.MovePosition(transform.position);
+        rb.MoveRotation(transform.rotation);
 
 
         FixedJoint fj = other.gameObject.GetComponent<FixedJoint>();
@@ -49,6 +50,7 @@ public class ObjectAttachment : MonoBehaviour
             fj.connectedBody = gameObject.GetComponent<Rigidbody>();
 
         HaveAttachment = true;
+        m_attachedObject = other.gameObject;
         //ParentColliderUpdate();
 
         //Debug.Log(this.gameObject.transform.childCount);
@@ -62,14 +64,8 @@ public class ObjectAttachment : MonoBehaviour
     private void OnTriggerExit(Collider other)
     {
         if(!HaveAttachment) return;
+        if (other.gameObject != m_attachedObject) return;
         Debug.Log("Exit");
-        FixedJoint fj = other.gameObject.GetComponent<FixedJoint>();
-        if (fj != null)
-            fj.connectedBody = null;
-
-        HaveAttachment = false;
-
-        other.gameObject.GetComponent<Rigidbody>().isKinematic = true;
         //ParentColliderUpdate();
     }
 
