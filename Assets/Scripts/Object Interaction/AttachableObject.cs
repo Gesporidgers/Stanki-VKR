@@ -5,14 +5,19 @@ public class AttachableObject : MonoBehaviour
 {
 
     public Transform StartSize;
-    public bool isChildObjectAtStart;
+    public bool isChildAtStart;
     private Transform scale;
     private bool isChildScale;
+
+    private void Awake()
+    {
+        if (StartSize == null) StartSize = transform;
+    }
 
     void Start()
     {
         scale = StartSize;
-        isChildScale = isChildObjectAtStart;
+        isChildScale = isChildAtStart;
     }
 
     // Update is called once per frame
