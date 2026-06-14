@@ -12,15 +12,15 @@ public class SubstractScript : MonoBehaviour
 	public ParticleSystem particles;
 
 
-	private void OnTriggerEnter(Collider other)
+	private void OnCollisionEnter(Collision other)
 	{
-		if (other != null && other.gameObject.GetComponentInParent<ObjectAttachment>().isAttached() && gameObject.GetComponentInParent<ObjectAttachment>().isAttached())
-		{
+		//if (other != null && other.gameObject.GetComponentInParent<ObjectAttachment>().isAttached() && gameObject.GetComponentInParent<ObjectAttachment>().isAttached())
+		//{
 			particles.Play();
 			gameObject.GetComponent<Timer>().duration = 1f;
 			gameObject.GetComponent<Timer>().doAfter = Substract;
 			gameObject.GetComponent<Timer>().StartTimer();
-		}
+		//}
 	}
 	public void Substract()
 	{
@@ -43,9 +43,9 @@ public class SubstractScript : MonoBehaviour
 		sourceComponent.GetComponent<MeshFilter>().sharedMesh = mesh;
 		sourceComponent.GetComponent<MeshRenderer>().sharedMaterials = result.materials.ToArray();
 
-		gameObject.GetComponent<Collider>().isTrigger = false;
+		gameObject.GetComponent<Collider>().enabled = false;
 		gameObject.GetComponent<Timer>().duration = 5f;
-		gameObject.GetComponent<Timer>().doAfter = () => { sourceComponent.GetComponent<Collider>().isTrigger = true; Debug.Log("Invoked"); };
+		gameObject.GetComponent<Timer>().doAfter = () => { sourceComponent.GetComponent<Collider>().enabled = true; Debug.Log("Invoked"); };
 		gameObject.GetComponent<Timer>().StartTimer();
 		particles.Stop();
 	}
