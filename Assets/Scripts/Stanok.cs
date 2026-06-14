@@ -1,4 +1,5 @@
 using NUnit.Framework;
+using NUnit.Framework.Constraints;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -40,30 +41,16 @@ public class Stanok : MonoBehaviour
 	public List<Button> Buttons;
 	public TMPro.TMP_Text Text;
 
-    private void Start()
-    {
-		/*for (int i = 0; i < transform.childCount; i++)
-		{
-			Debug.Log(transform.GetChild(i).gameObject.name);
-		}*/
-		
-		
-	}
 
     public void Switch()
 	{
 		work = Convert.ToInt32(work == 0);
 		if (work == 1)
 		{
-			JointMotor m = gameObject.GetComponent<HingeJoint>().motor;
-			m.force = MotorForces[forceIndex];
+			UpdateMotor();
 			StanokUI.gameObject.SetActive(true);
-			gameObject.GetComponent<HingeJoint>().motor = m;
-			
 			StartCoroutine(Sound.Start());
-            Buttons[1].interactable = forceIndex - 1 > 0;
-            Buttons[0].interactable = forceIndex + 2 < MotorForces.Count;
-			this.Text.text = (MotorForces[0] / 10).ToString();
+            UpdateButtons();
 		}
 		else
 		{
@@ -80,24 +67,28 @@ public class Stanok : MonoBehaviour
 	public void IncSpeed()
     {
 		forceIndex++;
-		JointMotor m = gameObject.GetComponent<HingeJoint>().motor;
-		m.force = MotorForces[forceIndex];
-		gameObject.GetComponent<HingeJoint>().motor = m;
-		Buttons[1].interactable = forceIndex - 1 > 0;
-		Buttons[0].interactable = forceIndex + 1 < MotorForces.Count;
-		this.Text.text = (MotorForces[forceIndex] / 10).ToString();
-		//return forceIndex + 2 > MotorForces.Count;
+		UpdateMotor();
+		UpdateButtons();
 	}
 
 	public void DecSpeed()
     {
 		forceIndex--;
+		UpdateMotor();
+		UpdateButtons();
+	}
+
+	private void UpdateButtons()
+	{
+		Buttons[1].interactable = forceIndex != 0; // кнопка минус
+		Buttons[0].interactable = forceIndex + 1 != MotorForces.Count; // кнопка плюс
+		this.Text.text = (MotorForces[forceIndex] / 10).ToString();
+	}
+
+	private void UpdateMotor()
+	{
 		JointMotor m = gameObject.GetComponent<HingeJoint>().motor;
 		m.force = MotorForces[forceIndex];
 		gameObject.GetComponent<HingeJoint>().motor = m;
-		Buttons[1].interactable = forceIndex - 1 > 0;
-		Buttons[0].interactable = forceIndex + 2 < MotorForces.Count;
-		this.Text.text = (MotorForces[forceIndex] / 10).ToString();
-		//return ;
 	}
 }
