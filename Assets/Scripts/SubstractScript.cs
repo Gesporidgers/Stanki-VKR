@@ -12,15 +12,17 @@ public class SubstractScript : MonoBehaviour
 	public ParticleSystem particles;
 
 
-	private void OnCollisionEnter(Collision other)
+	private void OnTriggerEnter(Collider other)
 	{
-		//if (other != null && other.gameObject.GetComponentInParent<ObjectAttachment>().isAttached() && gameObject.GetComponentInParent<ObjectAttachment>().isAttached())
-		//{
+		if (other.gameObject == target)
+		{
 			particles.Play();
 			gameObject.GetComponent<Timer>().duration = 1f;
 			gameObject.GetComponent<Timer>().doAfter = Substract;
 			gameObject.GetComponent<Timer>().StartTimer();
-		//}
+		}
+
+
 	}
 	public void Substract()
 	{

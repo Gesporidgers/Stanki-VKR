@@ -5,15 +5,17 @@ using UnityEngine.XR.Interaction.Toolkit.Inputs.Haptics;
 public class DangerObject : MonoBehaviour
 {
     // Start is called once before the first execution of Update after the MonoBehaviour is created
-    public void CheckEnabled()
+    [SerializeField]
+    GotoSceneScript gotoSceneScript;
+	public void CheckEnabled()
     {
         if (gameObject.GetComponentInParent<Stanok>().work == 1)
         {
-            gameObject.GetComponentInParent<Stanok>().Switch();
+            //gameObject.GetComponentInParent<Stanok>().Switch();
             HapticsUtility.SendHapticImpulse(0.5f, 0.5f, HapticsUtility.Controller.Both);
-            SceneManager.LoadScene("GameOver");
+            gotoSceneScript.GotoScene();
 
-        }
+		}
 
     }
     public void OnTriggerEnter(Collider other)
